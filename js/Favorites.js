@@ -37,12 +37,14 @@ class Favorites {
   }
 
   save() {
-    localStorage.setItem("@users-from-github", JSON.stringify(this.entries))
+    localStorage.setItem("@github-favorites:", JSON.stringify(this.entries))
+    this.emptyState()
   }
 
   load() {
-    this.entries = JSON.parse(localStorage.getItem("@users-from-github")) || []
+    this.entries = JSON.parse(localStorage.getItem("@github-favorites:")) || []
     this.createRow()
+    this.emptyState()
   }
 }
 
@@ -53,7 +55,7 @@ export class FavoritesView extends Favorites {
     this.removeAll()
     this.load()
   }
-  
+
   tBody = this.root.querySelector("table tBody")
 
   onAdd() {
@@ -85,8 +87,8 @@ export class FavoritesView extends Favorites {
   }
 
   createRow() {
+    this.emptyState()
     this.removeAll()
-    this.emptyTable()
 
     this.entries.forEach((entry) => {
       const tr = document.createElement("tr")
@@ -130,7 +132,7 @@ export class FavoritesView extends Favorites {
     })
   }
 
-  emptyTable() {
+  emptyState() {
     const isEmpty = this.entries.length == 0
 
     if (isEmpty) {
